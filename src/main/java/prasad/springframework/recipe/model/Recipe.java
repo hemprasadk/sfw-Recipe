@@ -1,9 +1,7 @@
 package prasad.springframework.recipe.model;
 
-import org.hibernate.engine.internal.Cascade;
-import org.springframework.stereotype.Service;
-
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,28 +11,56 @@ public class Recipe {
     private Long id;
 
     private String description;
-    private String prepTime;
-    private String cookTime;
-    private String servings;
+    private Integer prepTime;
+    private Integer cookTime;
+    private Integer servings;
     private String source;
     private String url;
+
+    public Integer getPrepTime() {
+        return prepTime;
+    }
+
+    public void setPrepTime(Integer prepTime) {
+        this.prepTime = prepTime;
+    }
+
+    public Integer getCookTime() {
+        return cookTime;
+    }
+
+    public void setCookTime(Integer cookTime) {
+        this.cookTime = cookTime;
+    }
+
+    public Integer getServings() {
+        return servings;
+    }
+
+    public void setServings(Integer servings) {
+        this.servings = servings;
+    }
+
     private String direction;
 
     @ManyToMany
     @JoinTable(
             name = "recipe_category",joinColumns = @JoinColumn(name = "recipe_id"),inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories;
+    private Set<Category> categories= new HashSet<>();;
 
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingrediants> ingrediants;
+    private Set<Ingredient> ingrediants = new HashSet<>();
 
 
     @Lob
     private Byte[] picture;
+
+    @Lob
+    private String directions;
 
     public Set<Category> getCategories() {
         return categories;
@@ -51,33 +77,19 @@ public class Recipe {
         return description;
     }
 
+    public String getDirections() {
+        return directions;
+    }
+
+    public void setDirections(String directions) {
+        this.directions = directions;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getPrepTime() {
-        return prepTime;
-    }
 
-    public void setPrepTime(String prepTime) {
-        this.prepTime = prepTime;
-    }
-
-    public String getCookTime() {
-        return cookTime;
-    }
-
-    public void setCookTime(String cookTime) {
-        this.cookTime = cookTime;
-    }
-
-    public String getServings() {
-        return servings;
-    }
-
-    public void setServings(String servings) {
-        this.servings = servings;
-    }
 
     public String getSource() {
         return source;
@@ -117,6 +129,7 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
     }
     public Long getId() {
         return id;
@@ -133,14 +146,17 @@ public class Recipe {
         this.difficulty = difficulty;
     }
 
-    public Set<Ingrediants> getIngrediants() {
+    public Set<Ingredient> getIngrediants() {
         return ingrediants;
     }
 
-    public void setIngrediants(Set<Ingrediants> ingrediants) {
+    public void setIngrediants(Set<Ingredient> ingrediants) {
         this.ingrediants = ingrediants;
     }
 
-
+    public void addIngredient(Ingredient ingredient) {
+        ingredient.setRecipe(this);
+        this.ingrediants.add(ingredient);
+    }
 
 }

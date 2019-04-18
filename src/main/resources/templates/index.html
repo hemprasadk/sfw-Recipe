@@ -6,5 +6,27 @@
 </head>
 <body>
 <h1 th:text="'Index Page'">Index Page</h1>
+<table >
+    <thead>
+    <tr>
+        <th style="width: 150px;">ID</th>
+        <th style="width: 150px;">Descption</th>
+        <th style="width: 150px;">Diffuculty </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="recipe:${recipes}">
+        <td th:text="${recipe?.id}">1 </td>
+        <td th:text="${recipe?.description}">Tom </td>
+        <td th:text="${recipe?.difficulty}">cruse</td>
+    </tr>
+    </tbody>
+
+    <tr>
+
+    </tr>
+
+</table>
+
 </body>
 </html>

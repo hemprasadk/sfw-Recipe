@@ -19,15 +19,22 @@ public class Category {
     }
 
     public String getCategoryName() {
-        return categoryName;
+        return description;
     }
 
     public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+        this.description = categoryName;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
-    private String categoryName;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private String description;
 
     public Set<Recipe> getRecipe() {
         return recipe;

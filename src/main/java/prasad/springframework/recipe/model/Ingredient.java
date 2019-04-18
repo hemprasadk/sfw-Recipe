@@ -1,15 +1,16 @@
 package prasad.springframework.recipe.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
-public class Ingrediants {
+public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descrption;
-    private String amount;
+    private BigDecimal amount;
 
 
 
@@ -19,6 +20,12 @@ public class Ingrediants {
 
     @OneToOne(fetch = FetchType.EAGER)
     private UnitOfMeasure unitOfMeasure;
+
+    public Ingredient(String descrption, BigDecimal amount, UnitOfMeasure unitOfMeasure) {
+        this.descrption = descrption;
+        this.amount = amount;
+        this.unitOfMeasure = unitOfMeasure;
+    }
 
     @ManyToOne
     private Recipe recipe;
@@ -39,11 +46,11 @@ public class Ingrediants {
         this.descrption = descrption;
     }
 
-    public String getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
