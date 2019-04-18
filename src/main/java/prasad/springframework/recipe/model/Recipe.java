@@ -4,6 +4,7 @@ import org.hibernate.engine.internal.Cascade;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -23,6 +24,10 @@ public class Recipe {
     private String url;
     private String direction;
     //private Difficulity difficulity;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingrediants> ingrediants;
+
 
     @Lob
     private Byte[] picture;
