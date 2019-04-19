@@ -1,10 +1,12 @@
 package prasad.springframework.recipe.bootstrap;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import prasad.springframework.recipe.model.*;
 import prasad.springframework.recipe.repositories.CategoryRepository;
 import prasad.springframework.recipe.repositories.RecipeRepository;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class ReciepeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -30,9 +33,11 @@ public class ReciepeBootstrap implements ApplicationListener<ContextRefreshedEve
 
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         recipeRepository.saveAll(getRecipes());
+        log.debug("loading bootstrap");
 
     }
 
